@@ -1,0 +1,15 @@
+node_modules/
+storage/private/temp/*
+storage/private/cache.json*
+storage/public/course_pics/*
+storage/public/user_pics/*
+storage/public/descriptions/*
+
+.vscode/
+.prettierrc
+
+.eslintrc.js
+*.swap
+*.gz
+*.log
+storage/private/cache.json

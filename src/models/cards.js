@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { documentsToArray } = require("../helpers/utils");
+const tasks = require("./tasks");
 
 const userSchema = new mongoose.Schema({
   cardTitle: String,
@@ -36,8 +37,17 @@ const updateCard = function (cardId, newData, callback) {
   });
 };
 
+const deleteCard = function (cardId, callback) {
+  model.deleteOne({ _id: cardId }, (error) => {
+    tasks.model.deleteMany({ parentid: cardId }, (error) => {
+      callback(error);
+    });
+  });
+};
+
 module.exports = {
   addCard,
   getCards,
   updateCard,
+  deleteCard,
 };

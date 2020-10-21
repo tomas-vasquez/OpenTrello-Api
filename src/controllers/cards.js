@@ -50,4 +50,18 @@ module.exports = function (app) {
       return res.send(newDocument);
     });
   });
+
+  app.delete("/cards", function (req, res) {
+    //validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    const cardId = req.body.cardId;
+
+    cards.deleteCard(cardId, (error) => {
+      if (error) return mongoErrorHandler(error, req, res);
+      return res.send();
+    });
+  });
 };

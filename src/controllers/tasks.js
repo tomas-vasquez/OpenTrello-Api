@@ -44,12 +44,27 @@ module.exports = function (app) {
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    const cardTitle = req.body.cardTitle;
-    const cardId = req.body.cardId;
+    const taskTitle = req.body.taskTitle;
+    const completed = req.body.completed;
+    const taskId = req.body._id;
 
-    tasks.updateCard(cardId, { cardTitle }, (error, newTask) => {
+    tasks.updateTask(taskId, { taskTitle, completed }, (error, newTask) => {
       if (error) return mongoErrorHandler(error, req, res);
       return res.send(newTask);
+    });
+  });
+
+  app.delete("/tasks", function (req, res) {
+    //validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    const taskId = req.body.taskId;
+
+    tasks.deleteTask(taskId, (error) => {
+      if (error) return mongoErrorHandler(error, req, res);
+      return res.send();
     });
   });
 };

@@ -31,8 +31,6 @@ const getTasks = function (id, callback) {
 };
 
 const updateTask = function (taskId, newData, callback) {
-  console.log(newData);
-  console.log(taskId);
   model.updateOne({ _id: taskId }, newData, function (error) {
     callback(error);
   });

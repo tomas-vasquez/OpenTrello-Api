@@ -18,21 +18,18 @@ const addCard = function (data, callback) {
   newCard.user_id = data.userId;
 
   newCard.save({}, (a, newCard) => {
-    console.log(newCard._doc);
     callback(null, { ...newCard._doc });
   });
 };
 
 const getCards = function (id, callback) {
   model.find({ user_id: id }, function (error, cards) {
-    console.log(documentsToArray(cards));
     callback(error, documentsToArray(cards));
   });
 };
 
 const updateCard = function (cardId, newData, callback) {
   model.updateOne({ _id: cardId }, newData, function (error, result) {
-    console.log(cardId);
     callback(error);
   });
 };

@@ -4,6 +4,7 @@ const { mongoErrorHandler } = require("../helpers/errors");
 
 module.exports = (req, res, next) => {
   let token = req.headers["api-token"];
+  console.log(token);
   let email = cache.get(token);
 
   if (!email) {

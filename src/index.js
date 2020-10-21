@@ -1,3 +1,5 @@
+console.log("=====================================================");
+
 const morgan = require("morgan");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -6,6 +8,7 @@ const cors = require("./midlewares/cors");
 
 //config
 const { urlDB, port } = require("./config");
+const cache = require("./helpers/cache");
 
 //mongodb
 mongoose.connect(urlDB, { useMongoClient: true }, function (error) {
@@ -26,10 +29,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //controllers
-require("./controllers/user")(app);
-// require("./controllers/userData")(app);
-// require("./controllers/academy")(app);
-// require("./controllers/admin")(app);
+require("./controllers")(app);
+
+app.get("/cache", ({ res }) => {
+  res.send(cache.getAll());
+});
+
+app.delete("/cache", ({ res }) => {
+  cache.deleteAll();
+  res.send("cojjj!!");
+});
 
 app.listen(app.listen(port));
 
